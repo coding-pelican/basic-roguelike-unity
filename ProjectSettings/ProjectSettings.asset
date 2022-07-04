@@ -255,7 +255,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Developement/Portfolio/Documents/user.keystore
+  AndroidKeystoreName: C:/Developement/Documents/user.keystore
   AndroidKeyaliasName: plodio_basic_onebit_roguelike_key
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
