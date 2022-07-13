@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4082563083800656470}
   - component: {fileID: 4082563083800656471}
   - component: {fileID: 4082563083800656465}
+  - component: {fileID: 7743351176535536577}
   m_Layer: 6
   m_Name: Wall3
   m_TagString: Untagged
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1753878371
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6078481773931188023, guid: ac65db09c2ce9f34abf9f4eaa7583c13, type: 3}
+  m_Sprite: {fileID: 8434084167657937986, guid: 6a0ae79be037150429e20727af7a7464, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,3 +110,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7743351176535536577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082563083800656468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd3da81b1e4c78419f4c3b241ca5497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmgSprite: {fileID: 5374305752567716628, guid: 6a0ae79be037150429e20727af7a7464, type: 3}
+  hp: 4

@@ -52,7 +52,7 @@ public class BoardManager : MonoBehaviour {
         for (int x = -1; x < columns + 1; x++) {
             for (int y = -1; y < rows + 1; y++) {
                 // 바닥타일 8종 중 하나의 프리팹을 랜덤으로 고름
-                GameObject toInstantiate = floorTiles[Random.Range(0, foodTiles.Length)];
+                GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
                 // 만약 위치가 테두리라면 외벽타일 중 골라 다시 저장
                 if (x == -1 || x == columns || y == -1 || y == rows) {
                     toInstantiate = outerWallTiles[Random.Range(0, outerWallTiles.Length)];
