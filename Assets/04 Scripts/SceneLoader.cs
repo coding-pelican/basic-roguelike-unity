@@ -6,7 +6,6 @@ public class SceneLoader : MonoBehaviour {
     public GameManager gameManager;
 
     void Awake() {
-        if (GameManager.instance == null)
-            Instantiate(gameManager);
+        if (GameManager.instance == null) Instantiate(gameManager);
     }
 }

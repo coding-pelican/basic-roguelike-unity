@@ -2,31 +2,101 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour {
-    [SerializeField]
-    private BoardManager _boardScript; // 보드매니저 스크립트의 레퍼런스
+    private TextMeshProUGUI _levelText;
+    private GameObject _levelImage;
 
-    private int _enemySpawnLevel = 3;
+    [SerializeField] private int level = 1;
+    private List<EnemyController> _enemies;
+    private bool _isAnyEnemyMoving;
+    private bool _isDoingSetup;
 
-    public int EnemySpawnLevel { get => _enemySpawnLevel; set => _enemySpawnLevel = value; }
+    public bool IsAnyEnemyMoving { get => _isAnyEnemyMoving; set => _isAnyEnemyMoving = value; }
+    public bool IsDoingSetup { get => _isDoingSetup; set => _isDoingSetup = value; }
 
+    public BoardManager boardScript; // 보드매니저 스크립트의 레퍼런스
+    public float levelStartDelay = 2f;
+    public float turnDelay = 0.1f;
+    public int playerFoodPoints = 100;
+    [HideInInspector] public bool isPlayersTurn = true;
+    
     #region instance
-    public static GameManager instance;
+    public static GameManager instance = null;
 
     private void Awake() {
-        if (instance != null) {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
             Destroy(gameObject);
-            return;
         }
-        instance = this;
-
-        _boardScript = GetComponent<BoardManager>();
-        InitGame();
+        DontDestroyOnLoad(gameObject);
+        _enemies = new List<EnemyController>();
+        boardScript = GetComponent<BoardManager>();
+        //InitGame();
     }
     #endregion
 
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        level++;
+        InitGame();
+    }
+
+    private void OnEnable() {
+        // OnLevelFinishedLoading 메소드에게 씬변화 이벤트를 듣도록 시킴
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    private void Update() {
+        if (isPlayersTurn || IsAnyEnemyMoving || IsDoingSetup) return;
+        StartCoroutine(MoveEnemies());
+    }
+
     private void InitGame() {
-        _boardScript.SetupScene(EnemySpawnLevel);
+        IsDoingSetup = true;
+        _levelImage = GameObject.Find("LevelImage");
+        _levelText = GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>();
+        _levelText.text = "Day " + (level - 1);
+        _levelImage.SetActive(true);
+        Invoke(nameof(HideLevelImage), levelStartDelay);
+
+        _enemies.Clear();
+        boardScript.SetupScene(level);
+    }
+
+    private void HideLevelImage() {
+        _levelImage.SetActive(false);
+        IsDoingSetup = false;
+    }
+
+    public void GameOver() {
+        _levelText.text = "After " + level + "days, you starved.";
+        _levelImage.SetActive(true);
+        enabled = false;
+    }
+
+    public void AddEnemyToList(EnemyController enemy) {
+        _enemies.Add(enemy);
+    }
+
+    IEnumerator MoveEnemies() {
+        IsAnyEnemyMoving = true;
+        yield return new WaitForSeconds(turnDelay);
+        if (_enemies.Count.Equals(0)) {
+            yield return new WaitForSeconds(turnDelay);
+        }
+        for (int i = 0; i < _enemies.Count; i++) {
+            _enemies[i].MoveEnemy();
+            yield return new WaitForSeconds(_enemies[i].moveTime);
+        }
+        isPlayersTurn = true;
+        IsAnyEnemyMoving = false;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1901476001146160953}
   - component: {fileID: 1901476001146160958}
   - component: {fileID: 1901476001146160959}
+  - component: {fileID: 1103098029}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 146684301
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 2001530592885948052, guid: 6a0ae79be037150429e20727af7a7464, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -142,7 +143,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.0909091, y: 1.0909091}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -151,3 +152,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &1103098029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901476001146160956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65d2a31b123692479a574ad9aca00b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  moveTime: 0.1
+  wallDamage: 1
+  pointsPerFood: 10
+  pointsPerSoda: 20
+  restartLevelDelay: 1
+  foodText: {fileID: 0}

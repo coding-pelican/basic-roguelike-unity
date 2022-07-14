@@ -19,13 +19,12 @@ public class BoardManager : MonoBehaviour {
     private Transform _boardHolder;
     private List<Vector3> _gridPositions = new List<Vector3>();
 
-    public Transform BoardHolder { get => _boardHolder; set => _boardHolder = value; }
     public List<Vector3> GridPositions { get => _gridPositions; set => _gridPositions = value; }
 
-    public int columns = 8;
-    public int rows = 8;
-    public Count wallCount = new Count(5, 9); // 레벨 당 벽의 하한,상한값
-    public Count foodCount = new Count(1, 5); // 레벨 당 음식 하한,상한값
+    public int columns = 16;
+    public int rows = 16;
+    public Count wallCount = new Count(5, 19); // 레벨 당 벽의 하한,상한값
+    public Count foodCount = new Count(1, 9); // 레벨 당 음식 하한,상한값
 
     public GameObject exit;
     public GameObject[] floorTiles;
@@ -33,8 +32,6 @@ public class BoardManager : MonoBehaviour {
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
     public GameObject[] enemyTiles;
-
-
 
     void InitialiseList() {
         GridPositions.Clear();
@@ -48,7 +45,7 @@ public class BoardManager : MonoBehaviour {
     // outerWall과 floor 세팅
     void SetupBoard() {
         // 새 Board 오브젝트를 인스턴스화하고 그 트랜스폼을 보드홀더에 저장
-        BoardHolder = new GameObject("Board").transform;
+        _boardHolder = new GameObject("Board").transform;
         for (int x = -1; x < columns + 1; x++) {
             for (int y = -1; y < rows + 1; y++) {
                 // 바닥타일 8종 중 하나의 프리팹을 랜덤으로 고름
@@ -60,7 +57,7 @@ public class BoardManager : MonoBehaviour {
                 // 고른 프리팹을 현재 순회중인 위치에 인스턴스화하여 저장
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                 // 생성된 인스턴스의 트랜스폼을 boardHolder의 자식으로 둠
-                instance.transform.SetParent(BoardHolder);
+                instance.transform.SetParent(_boardHolder);
             }
         }
     }
@@ -74,7 +71,6 @@ public class BoardManager : MonoBehaviour {
         // randomIndex에 해당하는 gridPositions값 삭제하여 사용가능하게 함
         GridPositions.RemoveAt(randomIndex);
         return randomPosition;
-
     }
 
     // 주어진 상/하한 값 내에서 랜덤으로 지정한 타일을 생성해줌
