@@ -8,6 +8,7 @@ using TMPro;
 public class PlayerController : MovingObject {
     private Animator _animator;
     private int _food;
+    private Vector2 touchOrigin = -Vector2.one; // 모바일 터치 위치 저장용
 
     public int wallDamage = 1;
     public int pointsPerFood = 10;
@@ -42,11 +43,36 @@ public class PlayerController : MovingObject {
     void Update() {
         if (!GameManager.instance.isPlayersTurn) return;
         // 1또는 -1로 가로, 세로 방향 저장용
-        int horizontal = (int)Input.GetAxisRaw("Horizontal");
-        int vertical = (int)Input.GetAxisRaw("Vertical");
+        int horizontal = 0;
+        int vertical = 0;
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        horizontal = (int)Input.GetAxisRaw("Horizontal");
+        vertical = (int)Input.GetAxisRaw("Vertical");
         // 가로로 움직였다면 세로는 0
         if (horizontal != 0) vertical = 0;
         // 어느 쪽으로든 움직이라는 명령이 있었다면
+#else
+        //터치입력이 여러번 있었다면
+        if (Input.touchCount > 0) {
+            Touch myTouch = Input.touches[0]; //첫 터치만 받아들임
+            if (myTouch.phase == TouchPhase.Began) { //터치 페이즈가 시작되었으면
+                touchOrigin = myTouch.position; // 터치 위치 저장
+            } else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0) { // 터치페이즈가 끝났고 화면내에서 이루어졌다면
+                Vector2 touchEnd = myTouch.position; // 터치 끝난 위치 저장
+                                                     // 터치의 처음과 끝 차이 계산
+                float x = touchEnd.x - touchOrigin.x;
+                float y = touchEnd.y - touchOrigin.y;
+                touchOrigin.x = -1; // 다시 음수로 설정
+                                    // 유저의 터치는 완벽한 직선이 아니므로 어느쪽 움직임이
+                                    // 더 컸나를 판정하여 해당방향으로 움직임
+                if (Mathf.Abs(x) > Mathf.Abs(y)) { // x가 y보다 더 컸다면
+                    horizontal = x > 0 ? 1 : -1; // x방향으로 1또는 -1 움직임
+                } else {
+                    vertical = y > 0 ? 1 : -1; //아니면 y축으로 움직임
+                }
+            }
+        }
+#endif
         if (horizontal != 0 || vertical != 0) AttemptMove<Wall>(horizontal, vertical); //플레이어는 벽과도 상호작용할 수 있으므로 제너릭에 Wall을 넘겨줌
     }
 
