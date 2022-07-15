@@ -23,7 +23,7 @@ public class BoardManager : MonoBehaviour {
 
     public int columns = 16;
     public int rows = 16;
-    public Count wallCount = new Count(5, 19); // 레벨 당 벽의 하한,상한값
+    public Count wallCount = new Count(8, 31); // 레벨 당 벽의 하한,상한값
     public Count foodCount = new Count(1, 9); // 레벨 당 음식 하한,상한값
 
     public GameObject exit;
@@ -92,9 +92,9 @@ public class BoardManager : MonoBehaviour {
         InitialiseList();
         LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
         LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
-        // 적의 수는 레벨에 따라 로그함수적으로 결정
-        // 따라서 레벨 2에는 적 1, 4에는 적 2, 8에는 적 3
-        int enemyCount = (int)Mathf.Log(level, 2f);
+        // // 적의 수는 레벨에 따라 로그함수적으로 결정
+        // // 따라서 레벨 2에는 적 1, 4에는 적 2, 8에는 적 3
+        int enemyCount = (int)(level * 0.333f);
         LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
         // 최종적으로 exit를 우상단에 생성
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);

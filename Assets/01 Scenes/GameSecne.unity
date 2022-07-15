@@ -487,6 +487,14 @@ PrefabInstance:
       propertyPath: foodText
       value: 
       objectReference: {fileID: 538123380}
+    - target: {fileID: 1103098029, guid: c0e463211418ded4994c71493d6130e0, type: 3}
+      propertyPath: pointsPerFood
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103098029, guid: c0e463211418ded4994c71493d6130e0, type: 3}
+      propertyPath: pointsPerSoda
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1901476001146160955, guid: c0e463211418ded4994c71493d6130e0, type: 3}
       propertyPath: m_RootOrder
       value: 1

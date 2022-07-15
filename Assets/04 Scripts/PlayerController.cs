@@ -11,8 +11,8 @@ public class PlayerController : MovingObject {
     private Vector2 touchOrigin = -Vector2.one; // 모바일 터치 위치 저장용
 
     public int wallDamage = 1;
-    public int pointsPerFood = 10;
-    public int pointsPerSoda = 20;
+    public int pointsPerFood = 5;
+    public int pointsPerSoda = 10;
     public float restartLevelDelay = 1f;
     public TextMeshProUGUI foodText;
 
@@ -33,7 +33,7 @@ public class PlayerController : MovingObject {
     }
 
     protected override void AttemptMove<T>(int xDir, int yDir) {
-        _food--;
+        _food-=(int)Mathf.Log(GameManager.instance.Level, 3);
         foodText.text = "Food: " + _food;
         base.AttemptMove<T>(xDir, yDir); // 부모 클래스의 AttemptMove 호출
         CheckIfGameOver();

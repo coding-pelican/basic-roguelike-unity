@@ -14,16 +14,19 @@ public class GameManager : MonoBehaviour {
     private List<EnemyController> _enemies;
     private bool _isAnyEnemyMoving;
     private bool _isDoingSetup;
+    private int _clickCount = 0;
 
+    public int Level { get => level; set => level = value; }
     public bool IsAnyEnemyMoving { get => _isAnyEnemyMoving; set => _isAnyEnemyMoving = value; }
     public bool IsDoingSetup { get => _isDoingSetup; set => _isDoingSetup = value; }
+
 
     public BoardManager boardScript; // 보드매니저 스크립트의 레퍼런스
     public float levelStartDelay = 2f;
     public float turnDelay = 0.1f;
-    public int playerFoodPoints = 100;
+    public int playerFoodPoints = 50;
     [HideInInspector] public bool isPlayersTurn = true;
-    
+
     #region instance
     public static GameManager instance = null;
 
@@ -41,7 +44,7 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        level++;
+        Level++;
         InitGame();
     }
 
@@ -55,6 +58,15 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            _clickCount++;
+            if (!IsInvoking("DoubleClick"))
+                Invoke(nameof(DoubleClick), 1.0f);
+
+        } else if (_clickCount == 2) {
+            CancelInvoke(nameof(DoubleClick));
+            Application.Quit();
+        }
         if (isPlayersTurn || IsAnyEnemyMoving || IsDoingSetup) return;
         StartCoroutine(MoveEnemies());
     }
@@ -63,12 +75,12 @@ public class GameManager : MonoBehaviour {
         IsDoingSetup = true;
         _levelImage = GameObject.Find("LevelImage");
         _levelText = GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>();
-        _levelText.text = "Day " + (level - 1);
+        _levelText.text = "Day " + (Level - 1);
         _levelImage.SetActive(true);
         Invoke(nameof(HideLevelImage), levelStartDelay);
 
         _enemies.Clear();
-        boardScript.SetupScene(level);
+        boardScript.SetupScene(Level);
     }
 
     private void HideLevelImage() {
@@ -77,9 +89,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameOver() {
-        _levelText.text = "After " + level + "days, you starved.";
+        _levelText.text = "After " + Level + "days, you starved.";
         _levelImage.SetActive(true);
         enabled = false;
+    }
+
+    private void DoubleClick() {
+        _clickCount = 0;
     }
 
     public void AddEnemyToList(EnemyController enemy) {
