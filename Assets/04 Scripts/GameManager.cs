@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour {
     private List<EnemyController> _enemies;
     private bool _isAnyEnemyMoving;
     private bool _isDoingSetup;
-    private int _clickCount = 0;
 
     public int Level { get => level; set => level = value; }
     public bool IsAnyEnemyMoving { get => _isAnyEnemyMoving; set => _isAnyEnemyMoving = value; }
@@ -58,15 +57,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            _clickCount++;
-            if (!IsInvoking("DoubleClick"))
-                Invoke(nameof(DoubleClick), 1.0f);
-
-        } else if (_clickCount == 2) {
-            CancelInvoke(nameof(DoubleClick));
-            Application.Quit();
-        }
         if (isPlayersTurn || IsAnyEnemyMoving || IsDoingSetup) return;
         StartCoroutine(MoveEnemies());
     }
@@ -92,10 +82,6 @@ public class GameManager : MonoBehaviour {
         _levelText.text = "After " + Level + "days, you starved.";
         _levelImage.SetActive(true);
         enabled = false;
-    }
-
-    private void DoubleClick() {
-        _clickCount = 0;
     }
 
     public void AddEnemyToList(EnemyController enemy) {
