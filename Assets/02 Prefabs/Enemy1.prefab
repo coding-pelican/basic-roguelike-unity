@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 146684301
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -1098188255952003387, guid: 6a0ae79be037150429e20727af7a7464, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -169,3 +169,10 @@ MonoBehaviour:
     m_Bits: 64
   moveTime: 0.1
   playerDamage: 10
+  bottomLeft: {x: 0, y: 0}
+  topRight: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  FinalNodeList: []
+  allowDiagonal: 0
+  dontCrossCorner: 1

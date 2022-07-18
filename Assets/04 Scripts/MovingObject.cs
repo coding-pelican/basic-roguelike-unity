@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class MovingObject : MonoBehaviour {
-    private BoxCollider2D _boxCollider;
-    private Rigidbody2D _rb2D;
-    private float _inverseMoveTime; // 이동 계산을 효과적으로 하기 위한 변수
+    public float moveTime = 0.1f;
+    public LayerMask blockingLayer;
 
     public float InverseMoveTime { get => _inverseMoveTime; set => _inverseMoveTime = value; }
 
-    public LayerMask blockingLayer;
-    public float moveTime = 0.1f;
+    private float _inverseMoveTime; // 이동 계산을 효과적으로 하기 위한 변수
+    private BoxCollider2D _boxCollider;
+    private Rigidbody2D _rb2D;
 
     protected virtual void Start() {
         _boxCollider = GetComponent<BoxCollider2D>();

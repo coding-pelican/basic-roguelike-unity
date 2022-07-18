@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f6ff8515b96e8479798ec918e73eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 3
   boardScript: {fileID: 0}
   levelStartDelay: 2
   turnDelay: 0.1

@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PlayerController : MovingObject {
-    private Animator _animator;
-    private int _food;
-    private Vector2 touchOrigin = -Vector2.one; // 모바일 터치 위치 저장용
-
     public int wallDamage = 1;
     public int pointsPerFood = 5;
     public int pointsPerSoda = 10;
     public float restartLevelDelay = 1f;
     public TextMeshProUGUI foodText;
+
+    private int _food;
+    private Vector2 touchOrigin = -Vector2.one; // 모바일 터치 위치 저장용
+    private Animator _animator;
 
     protected override void Start() {
         _animator = GetComponent<Animator>();

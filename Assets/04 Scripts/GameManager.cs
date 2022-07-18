@@ -7,27 +7,26 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour {
-    private TextMeshProUGUI _levelText;
-    private GameObject _levelImage;
-
-    [SerializeField] private int level = 1;
-    private List<EnemyController> _enemies;
-    private bool _isAnyEnemyMoving;
-    private bool _isDoingSetup;
+    public int playerFoodPoints = 50;
+    public float levelStartDelay = 2f;
+    public float turnDelay = 0.1f;
+    [HideInInspector] public bool isPlayersTurn = true;
 
     public int Level { get => level; set => level = value; }
     public bool IsAnyEnemyMoving { get => _isAnyEnemyMoving; set => _isAnyEnemyMoving = value; }
     public bool IsDoingSetup { get => _isDoingSetup; set => _isDoingSetup = value; }
+    public BoardManager BoardScript { get => _boardScript; set => _boardScript = value; }
 
-
-    public BoardManager boardScript; // 보드매니저 스크립트의 레퍼런스
-    public float levelStartDelay = 2f;
-    public float turnDelay = 0.1f;
-    public int playerFoodPoints = 50;
-    [HideInInspector] public bool isPlayersTurn = true;
+    [SerializeField] private int level = 1;
+    private List<EnemyController> _enemies;
+    private GameObject _levelImage;
+    private TextMeshProUGUI _levelText;
+    private bool _isAnyEnemyMoving;
+    private bool _isDoingSetup;
 
     #region instance
     public static GameManager instance = null;
+    [SerializeField] private BoardManager _boardScript; // 보드매니저 스크립트의 레퍼런스
 
     private void Awake() {
         if (instance == null) {
@@ -37,7 +36,7 @@ public class GameManager : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
         _enemies = new List<EnemyController>();
-        boardScript = GetComponent<BoardManager>();
+        BoardScript = GetComponent<BoardManager>();
         //InitGame();
     }
     #endregion
@@ -70,7 +69,7 @@ public class GameManager : MonoBehaviour {
         Invoke(nameof(HideLevelImage), levelStartDelay);
 
         _enemies.Clear();
-        boardScript.SetupScene(Level);
+        BoardScript.SetupScene(Level);
     }
 
     private void HideLevelImage() {

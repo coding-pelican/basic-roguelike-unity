@@ -16,22 +16,22 @@ public class Count {
 }
 
 public class BoardManager : MonoBehaviour {
-    private Transform _boardHolder;
-    private List<Vector3> _gridPositions = new List<Vector3>();
+    public int columns = 16;
+    public int rows = 16;
+    public Count foodCount = new Count(1, 9); // 레벨 당 음식 하한,상한값
+    public Count wallCount = new Count(8, 31); // 레벨 당 벽의 하한,상한값
+
+    public GameObject exit;
+    public GameObject[] enemyTiles;
+    public GameObject[] floorTiles;
+    public GameObject[] foodTiles;
+    public GameObject[] outerWallTiles;
+    public GameObject[] wallTiles;
 
     public List<Vector3> GridPositions { get => _gridPositions; set => _gridPositions = value; }
 
-    public int columns = 16;
-    public int rows = 16;
-    public Count wallCount = new Count(8, 31); // 레벨 당 벽의 하한,상한값
-    public Count foodCount = new Count(1, 9); // 레벨 당 음식 하한,상한값
-
-    public GameObject exit;
-    public GameObject[] floorTiles;
-    public GameObject[] outerWallTiles;
-    public GameObject[] wallTiles;
-    public GameObject[] foodTiles;
-    public GameObject[] enemyTiles;
+    private Transform _boardHolder;
+    private List<Vector3> _gridPositions = new List<Vector3>();
 
     void InitialiseList() {
         GridPositions.Clear();
