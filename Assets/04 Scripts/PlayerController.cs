@@ -33,7 +33,13 @@ public class PlayerController : MovingObject {
     }
 
     protected override void AttemptMove<T>(int xDir, int yDir) {
-        _food-=(int)Mathf.Log(GameManager.instance.Level, 3);
+        if (GameManager.instance.Level > 27) {
+            _food -= (int)Mathf.Log(GameManager.instance.Level, 3);
+        } else if (GameManager.instance.Level > 16) {
+            _food -= (int)Mathf.Log(GameManager.instance.Level, 4);
+        } else if (GameManager.instance.Level > 2) {
+            _food -= 1;
+        }
         foodText.text = "Food: " + _food;
         base.AttemptMove<T>(xDir, yDir); // 부모 클래스의 AttemptMove 호출
         CheckIfGameOver();

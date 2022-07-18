@@ -122,7 +122,7 @@ public class EnemyController : MovingObject {
                 FinalNodeList.Add(_StartNode);
                 FinalNodeList.Reverse();
 
-                for (int i = 0; i < FinalNodeList.Count; i++) print(i + "번째는 " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
+                for (int i = 0; i < FinalNodeList.Count; i++) Debug.Log(i + "번째는 " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
                 return;
             }
 

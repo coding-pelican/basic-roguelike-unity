@@ -18,7 +18,7 @@ public class Count {
 public class BoardManager : MonoBehaviour {
     public int columns = 16;
     public int rows = 16;
-    public Count foodCount = new Count(1, 9); // 레벨 당 음식 하한,상한값
+    public Count foodCount = new Count(1, 11); // 레벨 당 음식 하한,상한값
     public Count wallCount = new Count(8, 31); // 레벨 당 벽의 하한,상한값
 
     public GameObject exit;
