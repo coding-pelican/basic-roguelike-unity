@@ -46,14 +46,9 @@ public class GameManager : MonoBehaviour {
         InitGame();
     }
 
-    private void OnEnable() {
-        // OnLevelFinishedLoading 메소드에게 씬변화 이벤트를 듣도록 시킴
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    }
+    private void OnEnable() => SceneManager.sceneLoaded += OnLevelFinishedLoading; // OnLevelFinishedLoading 메소드에게 씬변화 이벤트를 듣도록 시킴
 
-    private void OnDisable() {
-        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-    }
+    private void OnDisable() => SceneManager.sceneLoaded -= OnLevelFinishedLoading;
 
     private void Update() {
         if (isPlayersTurn || IsAnyEnemyMoving || IsDoingSetup) return;

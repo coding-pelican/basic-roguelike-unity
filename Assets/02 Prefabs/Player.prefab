@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1901476001146160958}
   - component: {fileID: 1901476001146160959}
   - component: {fileID: 1103098029}
+  - component: {fileID: 6418551218675700146}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -164,12 +165,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65d2a31b123692479a574ad9aca00b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveTime: 0.1
   blockingLayer:
     serializedVersion: 2
     m_Bits: 64
-  moveTime: 0.1
   wallDamage: 1
   pointsPerFood: 10
   pointsPerSoda: 20
   restartLevelDelay: 1
   foodText: {fileID: 0}
+--- !u!114 &6418551218675700146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901476001146160956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e439197e1d54ede4f90dc5bc16e77657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
