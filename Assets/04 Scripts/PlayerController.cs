@@ -59,6 +59,8 @@ public class PlayerController : MovingObject {
             SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
         }
         CheckIfGameOver();
+        GameManager.instance.SetMobileHorizontal(0);
+        GameManager.instance.SetMobileVertical(0);
         GameManager.instance.isPlayersTurn = false;
     }
 
@@ -72,7 +74,6 @@ public class PlayerController : MovingObject {
         vertical = (int)Input.GetAxisRaw("Vertical");
         // 가로로 움직였다면 세로는 0
         if (horizontal != 0) vertical = 0;
-        // 어느 쪽으로든 움직이라는 명령이 있었다면
 #else
         //터치입력이 여러번 있었다면
         if (Input.touchCount > 0) {
@@ -94,7 +95,11 @@ public class PlayerController : MovingObject {
                 }
             }
         }
+
+        horizontal = GameManager.instance.GetMobileHorizontal();
+        vertical = GameManager.instance.GetMobileVertical();
 #endif
+        // 어느 쪽으로든 움직이라는 명령이 있었다면
         if (horizontal != 0 || vertical != 0) AttemptMove<Wall>(horizontal, vertical); //플레이어는 벽과도 상호작용할 수 있으므로 제너릭에 Wall을 넘겨줌
     }
 

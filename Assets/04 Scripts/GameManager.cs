@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour {
     private bool _isAnyEnemyMoving;
     private bool _isDoingSetup;
 
+    private GameObject _mobileGUI;
+    private int _mobileHorizontal = 0;
+    private int _mobileVertical = 0;
+
     #region instance
     public static GameManager instance = null;
     [SerializeField] private BoardManager _boardScript; // 보드매니저 스크립트의 레퍼런스
@@ -37,6 +41,12 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         _enemies = new List<EnemyController>();
         BoardScript = GetComponent<BoardManager>();
+        _mobileGUI = GameObject.Find("MobileGUI");
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBPLAYER
+        _mobileGUI.SetActive(false);
+#else
+        _mobileGUI.SetActive(true);
+#endif
         //InitGame();
     }
     #endregion
@@ -95,4 +105,23 @@ public class GameManager : MonoBehaviour {
         isPlayersTurn = true;
         IsAnyEnemyMoving = false;
     }
+
+    public void OnClickUp() {
+        _mobileVertical = isPlayersTurn ? 1 : 0;
+    }
+    public void OnClickDown() {
+        _mobileVertical = isPlayersTurn ? -1 : 0;
+    }
+    public void OnClickLeft() {
+        _mobileHorizontal = isPlayersTurn ? -1 : 0;
+    }
+    public void OnClickRight() {
+        _mobileHorizontal = isPlayersTurn ? 1 : 0;
+    }
+
+    public int GetMobileHorizontal() => _mobileHorizontal;
+    public void SetMobileHorizontal(int d) { _mobileHorizontal = isPlayersTurn ? d : 0; }
+    public int GetMobileVertical() => _mobileVertical;
+    public void SetMobileVertical(int d) => _mobileVertical = isPlayersTurn ? d : 0;
+
 }
