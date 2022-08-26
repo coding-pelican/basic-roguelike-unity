@@ -18,6 +18,8 @@ public class EnemyController : MovingObject {
     public int playerDamage;
     public List<Node> FinalNodeList;
     public bool allowDiagonal, dontCrossCorner;
+    public AudioClip enemyAttack1;
+    public AudioClip enemyAttack2;
 
     private int _sizeX, _sizeY; // PathFinding Value
     private Node[,] _NodeArray;
@@ -49,6 +51,7 @@ public class EnemyController : MovingObject {
         base.AttemptMove<T>(xDir, yDir);
         // Enemy가 이미 움직였으므로 true로 변경
         SkipMove = true;
+        SoundManager.instance.RandomizeSfx(enemyAttack1, enemyAttack2);
     }
 
     public void MoveEnemy() {

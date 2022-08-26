@@ -12,9 +12,18 @@ public class PlayerController : MovingObject {
     public float restartLevelDelay = 1f;
     public TextMeshProUGUI foodText;
 
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
+    public AudioClip eatSound1;
+    public AudioClip eatSound2;
+    public AudioClip drinkSound1;
+    public AudioClip drinkSound2;
+    public AudioClip gameOverSound;
+
     private int _food;
     private Vector2 touchOrigin = -Vector2.one; // 모바일 터치 위치 저장용
     private Animator _animator;
+
 
     protected override void Start() {
         _animator = GetComponent<Animator>();
@@ -28,8 +37,11 @@ public class PlayerController : MovingObject {
     }
 
     private void CheckIfGameOver() {
-        if (_food <= 0)
+        if (_food <= 0) {
+            SoundManager.instance.PlaySingle(gameOverSound);
+            SoundManager.instance.musicSource.Stop();
             GameManager.instance.GameOver();
+        }
     }
 
     protected override void AttemptMove<T>(int xDir, int yDir) {
@@ -40,8 +52,12 @@ public class PlayerController : MovingObject {
         } else if (GameManager.instance.Level > 2) {
             _food -= 1;
         }
+
         foodText.text = "Food: " + _food;
         base.AttemptMove<T>(xDir, yDir); // 부모 클래스의 AttemptMove 호출
+        if (Move(xDir, yDir, out RaycastHit2D hit)) {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
         CheckIfGameOver();
         GameManager.instance.isPlayersTurn = false;
     }
@@ -109,10 +125,12 @@ public class PlayerController : MovingObject {
         } else if (other.CompareTag("Food")) {
             _food += pointsPerFood;
             foodText.text = "+" + pointsPerFood + " Food:" + _food;
+            SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
             other.gameObject.SetActive(false);
         } else if (other.CompareTag("Soda")) {
             _food += pointsPerSoda;
             foodText.text = "+" + pointsPerSoda + " Food:" + _food;
+            SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
             other.gameObject.SetActive(false);
         }
     }
